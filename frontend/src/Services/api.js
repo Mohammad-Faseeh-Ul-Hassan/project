@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:5000";
+const url = "https://myproject-h7lj.onrender.com";
 
 export const addRecipe = async (recipe) => {
     return await axios.post(`${url}/admin`, recipe);
