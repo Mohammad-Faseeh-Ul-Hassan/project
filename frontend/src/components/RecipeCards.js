@@ -6,7 +6,7 @@ function RecipeCards() {
 
   const fetchdata = async () => {
     try {
-      let result = await fetch('http://localhost:5000/admin');
+      let result = await fetch('https://myproject-h7lj.onrender.com/admin');
       result = await result.json();
       setdata(result);
     } catch (error) {
