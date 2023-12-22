@@ -1,6 +1,6 @@
 import axios from "axios";
 //  const url= "https://myproject-h7lj.onrender.com"
-const url = "https://localhost:3000/";
+const url = "https://myproject-h7lj.onrender.com";
 
 export const addRecipe = async (recipe) => {
     return await axios.post(`${url}/admin`, recipe);
