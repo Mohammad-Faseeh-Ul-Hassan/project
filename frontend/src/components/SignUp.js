@@ -5,6 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import {
+  auth,
+  provider as googleProvider,
+  signInWithPopup,
+  signOut,
+} from './firebase';
 const SignUp = () => {
   const [userData, setUserData] = useState({
     email: '',
@@ -15,6 +21,23 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+  };
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      
+      const userData = {
+        displayName: user.displayName,
+        email: user.email,
+        // Add more user data if needed
+      };
+      console.log(userData)
+
+      // Call collectData to handle storing user data
+    } catch (error) {
+      console.error('Error during Google sign-in:', error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -92,13 +115,17 @@ const SignUp = () => {
       <div style={{ textAlign: "center" }}>
   <h2 style={{marginTop:'10px'}}>OR</h2>
 </div>
-      <button
+      {/* <button
         onClick={() => login()}
         style={{ background: "#007bff", color: "white", padding: "10px", display: "flex", alignItems: "center", marginTop: '20px',width: '100%',justifyContent: "center" }}
       >
         <FontAwesomeIcon  icon={faGoogle} style={{ marginRight: "5px", color: "red" }} />
         Sign in with Google
-      </button>
+      </button> */}
+      <button onClick={signInWithGoogle}
+       style={{ background: "#007bff", color: "white", padding: "10px", display: "flex", alignItems: "center", marginTop: '20px',width: '100%',justifyContent: "center" }}>
+        <FontAwesomeIcon  icon={faGoogle} style={{ marginRight: "5px", color: "red" }} />
+        Sign with google</button>
     </div>
   );
 };
