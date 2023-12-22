@@ -20,6 +20,7 @@ function NavBar() {
     padding: '5px 20px',
     color: '#333',
   };
+  const {isLogin} = useContext(item)
 
   const logoStyle = {
     width: '50px',
@@ -79,7 +80,12 @@ function NavBar() {
           <FontAwesomeIcon icon={faHeart} style={heartIconStyle} /> 
           <h1>{v}</h1>
         </li>
-
+        
+        <Link to='/LoggedInUser'>
+        <li className="nav-item" style={{ margin: '0' }}>
+          <p style={{ color:"yellow", marginTop:'15px'}}>Logged In User</p>
+        </li>
+        </Link>
 
       </ul>
     </div>

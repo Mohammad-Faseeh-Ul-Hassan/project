@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { login } from '../Services/api';
-
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [loginData, setloginData] = useState({
     email: '',
     password: '',
   });
+  const navigation = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,9 +17,20 @@ const Login = () => {
     e.preventDefault();
     try {
       // Call signUp function from your API service
-      await login(loginData);
+      const response = await login(loginData);
+      console.log(response);
+      if(response.data.message === true) {
+        localStorage.setItem('token', response.data.token);
+        if(response.data.email){
+          localStorage.setItem('adminEmail', response.data.email);
+          navigation('/admin');
+        } else {
+          localStorage.setItem('user', response.data.user.email);
+          navigation('/home');
+        }
+      }
       // Display alert upon successful signup
-      alert('Login Successfully');
+      
       // Additional logic for signup process can be added here
       console.log('Login Data:', loginData);
     } catch (error) {

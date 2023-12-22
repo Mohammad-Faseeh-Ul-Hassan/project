@@ -28,4 +28,4 @@ app.use('/admin',viewRecipes);
 app.use('/admin/:id',deleteRecipes);
 
 app.use('/signup',signUps);
-app.use('/login',logins);
+app.use('/login', logins);

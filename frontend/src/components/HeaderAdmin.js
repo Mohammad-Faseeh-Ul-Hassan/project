@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell,faMagnifyingGlass,faGear,faCircleUser } from '@fortawesome/free-solid-svg-icons';
-
+import { item } from '../App';
+import { useNavigate } from 'react-router-dom';
 function HeaderAdmin() {
+  const { handleLogout } = useContext(item);
+  const navigation = useNavigate();
+
+  const handleLogoutAdmin = () => {
+    handleLogout();
+    navigation('/Login');
+  }
   const iconStyle = {
     border: '1px solid lightgray',
     borderRadius: '10%',
-    padding: '6px', // Adjust padding for icon size and border
+    padding: '6px',
   };
 
   return (
@@ -17,6 +25,7 @@ function HeaderAdmin() {
         <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" style={iconStyle} />
         <FontAwesomeIcon icon={faGear} size="lg" style={{ ...iconStyle, color: "#000000" }} />
         <FontAwesomeIcon icon={faCircleUser} size="lg" style={iconStyle} />
+        <button onClick={handleLogoutAdmin}>Log out</button>
       </div>
     </div>
   );

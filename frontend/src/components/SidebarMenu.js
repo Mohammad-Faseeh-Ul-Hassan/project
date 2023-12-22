@@ -5,15 +5,21 @@ import { useState } from 'react';
 function SidebarMenu({ onComponentSelect }) {
   const [showRecipes, setShowRecipes] = useState(false);
   const [showChef, setShowChef] = useState(false);
+  const [showCussines, setShowCussines] = useState(false);
 
 const toggleRecipes = () => {
   setShowRecipes(!showRecipes);
-  setShowChef(false); // Close the Chef dropdown when opening Recipes dropdown
+  setShowChef(false); 
 };
 
 const toggleChef = () => {
   setShowChef(!showChef);
-  setShowRecipes(true); // Close the Recipes dropdown when opening Chef dropdown
+  setShowRecipes(true); 
+};
+
+const toggleCussines = () => {
+  setShowCussines(!showCussines);
+  setShowCussines(true); 
 };
 
   const buttonStyle = {
@@ -36,6 +42,10 @@ const toggleChef = () => {
   };
 
   const handleChefClick = (componentName) => {
+    onComponentSelect(componentName);
+  };
+
+  const handleCussinesClick = (componentName) => {
     onComponentSelect(componentName);
   };
 
@@ -87,6 +97,21 @@ const toggleChef = () => {
               <button style={buttonStyle} onClick={() => handleChefClick('DeleteChef')}>
                 <FontAwesomeIcon icon={faTrash} style={{ marginRight: '10px' }} />
                 Delete Top Chefs
+              </button>
+            </div>
+          )}
+           <button style={{ ...buttonStyle, ...(showCussines && { backgroundColor: 'lightgray' }) }} onClick={toggleCussines}>
+            Cussines
+            <FontAwesomeIcon icon={showCussines ? faAngleUp : faAngleDown} size="lg" style={{ marginLeft: '10px' }} />
+          </button>
+          {showCussines && (
+            <div>
+              <button style={buttonStyle} onClick={() => handleCussinesClick('addCussines')}>
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: '10px' }} /> Add Cussines
+              </button>
+              <button style={buttonStyle} onClick={() => handleCussinesClick('DeleteCussines')}>
+                <FontAwesomeIcon icon={faTrash} style={{ marginRight: '10px' }} />
+                Delete Cussines
               </button>
             </div>
           )}

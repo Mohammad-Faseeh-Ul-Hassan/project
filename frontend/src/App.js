@@ -1,3 +1,50 @@
+// import { GoogleLogin } from '@react-oauth/google';
+// import jwt_decode from "jwt-decode";
+// import { useGoogleLogin } from "@react-oauth/google";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+// import axios from "axios";
+
+// function App() {
+//   const login = useGoogleLogin({
+//     onSuccess: async (response) => {
+//       try {
+//         const res = await axios.get(
+//           "https://www.googleapis.com/oauth2/v3/userinfo",
+//           {
+//             headers: {
+//               Authorization: `Bearer ${response.access_token}`,
+//             },
+//           }
+//         );
+//         console.log(res);
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     },
+//   });
+  
+//   return (
+//     <button
+//       onClick={() => login()}
+//       style={{ background: "#007bff", color: "white", padding: "10px", display: "flex", alignItems: "center" }}
+//     >
+//       <FontAwesomeIcon icon={faGoogle} style={{ marginRight: "5px",color:"red" }} />
+//       Sign in with Google
+//     </button>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+
+
 // import React from "react";
 // import Test from "./Test";
 // function App(){
@@ -204,16 +251,35 @@ import MemberShips from "./components/MemberShips";
 import Help from "./components/Help";
 import { createContext } from "react";
 import { useState } from "react";
+import LoggedInUser from "./components/LoggedInUser";
+import { useLocation } from "react-router-dom";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
-export const item =createContext()
+export const item =createContext();
 
 function App() {
-  const [v,sv]=useState(0)
+  const location = useLocation();
+  
+
+  const showNavBar = !location.pathname.includes('/admin');
+
+  const [v,sv]=useState(0);
+
+  const handleLogout = (user) => {
+
+    if(user) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('adminEmail');
+    }
+  }
  
   return (
-    <item.Provider value={{v,sv}}>
+    <item.Provider value={{v,sv, handleLogout}}>
     <div>
-      <NavBar />
+      {showNavBar && <NavBar />}
       <Routes>
         <Route path="/home" element={<LandingPage />} />
         <Route path="/recipe" element={<Recipes />} />
@@ -222,12 +288,15 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Admin" element={<Admin />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/Admin" element={<Admin />} />
+        </Route>
         <Route path="/Account" element={<Account />} />
         <Route path="/OurAlumini" element={<OurAlumini />} />
         <Route path="/Memberships" element={<MemberShips />} />
         <Route path="/TermOfServices" element={<TermOfServices />} />
         <Route path="/Help" element={<Help />} />
+        <Route path="/LoggedInUser" element={<LoggedInUser />} />
 
       </Routes>
     </div>

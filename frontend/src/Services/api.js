@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = "https://myproject-h7lj.onrender.com";
+ const url= "https://myproject-h7lj.onrender.com"
+// const url = "http://localhost:3000/";
 
 export const addRecipe = async (recipe) => {
     return await axios.post(`${url}/admin`, recipe);
@@ -16,7 +17,6 @@ export const getRecipe = async () => {
 export const deleteRecipe = async (recipeId) => {
     return await axios.delete(`${url}/admin/${recipeId}`);
 }
-
 
 export const signUp = async (userData) => {
     return await axios.post(`${url}/signup`, userData);

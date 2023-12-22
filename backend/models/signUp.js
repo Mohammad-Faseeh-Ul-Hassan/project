@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 const signUpSchema = new mongoose.Schema({
   email: {
     type: String,
